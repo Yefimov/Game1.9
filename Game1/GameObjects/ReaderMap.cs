@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Game1.GameObjects
 {
-    class ReaderMap : ScenicObject
+    class ReaderMap
     {
         public static string[,] Reader(string[,] MasMapsToDraw)
         {
@@ -43,28 +43,11 @@ namespace Game1.GameObjects
             {
                 for (int j = 0; j < MasMapsToDraw.GetLength(1); j++)
                 {
-                    if (MasMapsToDraw[i, j] == "1") // Описание каждого типа объекта (от 1 до 4) дано в классе ScenicObject
+                    int type = Int32.Parse(MasMapsToDraw[i, j]);
+                    if (type > 0)
                     {
-                        scenicObjects.Add(new ScenicObject(new Vector2(i * cell, j * cell), 16, 16, 1, image));
+                        scenicObjects.Add(new ScenicObject(new Vector2(i * cell, j * cell), type, image, 1f));
                     }
-                    if (MasMapsToDraw[i, j] == "2")
-                    {
-                        scenicObjects.Add(new ScenicObject(new Vector2(i * cell, j * cell), 16, 16, 2, image));
-                    }
-                    if (MasMapsToDraw[i, j] == "3")
-                    {
-                        scenicObjects.Add(new ScenicObject(new Vector2(i * cell, j * cell), 16, 16, 3, image));
-                    }
-                    // TODO: Добавить текстуру воды
-                    //if (MasMapsToDraw[i,j] == "4")
-                    //{
-                    //    scenicObjects.Add(new ScenicObject(X1, X1, 100, 4, image4));
-                    //}
-                    // TODO: Добавить текстуру базы игрока ("орёл")
-                    //if (MasMapsToDraw[i,j] == "4")
-                    //{
-                    //    scenicObjects.Add(new ScenicObject(X1, X1, 100, 4, image4));
-                    //}
                 }
             }
             return scenicObjects;

@@ -18,9 +18,7 @@ namespace Game1.GameObjects
 
         public bool ShotHasCollisions { get; set; }//Есть Коллизия пули и объекта
 
-        private SpriteInfo spriteInfoShot;//текстура Пули
         private SpriteInfo spriteInfoBigBang;//текстура взрыва
-
 
         public BigBang BigBangObjects;//экземпляр взрыва, ему будет присвоен взрыв с координатами коллизии пули и объекта
 
@@ -28,21 +26,19 @@ namespace Game1.GameObjects
         #endregion
 
         //Конструктор Пули
-        public Shot(SpriteInfo spriteInfoShot, SpriteInfo spriteInfoBigBang)
+        public Shot(Vector2 Position, SpriteInfo spriteInfoShot, float Speed, SpriteInfo spriteInfoBigBang)
+            : base(Position, spriteInfoShot, 1.0f, Speed)
         {
             this.ShotHasCollisions = false;
-            this.spriteInfoShot = spriteInfoShot;
             this.spriteInfoBigBang = spriteInfoBigBang;
             origin = new Vector2(spriteInfoShot.FrameWidth / 2f, spriteInfoShot.FrameHeight / 2f);
-            Height = spriteInfoShot.FrameHeight;
-            Width = spriteInfoShot.FrameWidth;
         }
 
         //Рисуем Пулю
         public override void Draw(SpriteBatch spriteBatch)
         {
-            var sourceRect = new Rectangle(0, 0, spriteInfoShot.FrameWidth, spriteInfoShot.FrameHeight);
-            spriteBatch.Draw(spriteInfoShot.Texture, Position, sourceRect, Color.White, Angle, origin, 1f, SpriteEffects.None, 0f);
+            var sourceRect = new Rectangle(0, 0, Sprite.FrameWidth, Sprite.FrameHeight);
+            spriteBatch.Draw(Sprite.Texture, Position, sourceRect, Color.White, Angle, origin, 1f, SpriteEffects.None, 0f);
         }
 
         //Логика Пули
@@ -55,7 +51,7 @@ namespace Game1.GameObjects
                 if (((Position.X - Height / 2) + (-Speed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds) < 0)
                 {
                     ShotHasCollisions = true;
-                    BigBang bigbang = new BigBang(spriteInfoBigBang)
+                    BigBang bigbang = new BigBang(Position, spriteInfoBigBang)
                     {
                         Position = new Vector2((Position.X - Height / 2) + (-Speed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds, Position.Y),
                         SpeedOfAnimation = 0.1f
@@ -77,7 +73,7 @@ namespace Game1.GameObjects
                 if (((Position.Y - Height / 2) + (-Speed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds) < 0)
                 {
                     ShotHasCollisions = true;
-                    BigBang bigbang = new BigBang(spriteInfoBigBang)
+                    BigBang bigbang = new BigBang(Position, spriteInfoBigBang)
                     {
                         Position = new Vector2(Position.X, Position.Y),
                         SpeedOfAnimation = 0.1f
@@ -98,7 +94,7 @@ namespace Game1.GameObjects
                 if ((Position.X + Height / 2) + Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds >= 800)
                 {
                     ShotHasCollisions = true;
-                    BigBang bigbang = new BigBang(spriteInfoBigBang)
+                    BigBang bigbang = new BigBang(Position, spriteInfoBigBang)
                     {
                         Position = new Vector2((Position.X + Height / 2) + Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds, Position.Y),
                         SpeedOfAnimation = 0.1f
@@ -119,7 +115,7 @@ namespace Game1.GameObjects
                 if (((Position.Y + Height / 2) + Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds) >= 480)
                 {
                     ShotHasCollisions = true;
-                    BigBang bigbang = new BigBang(spriteInfoBigBang)
+                    BigBang bigbang = new BigBang(Position, spriteInfoBigBang)
                     {
                         Position = new Vector2(Position.X, ((Position.Y + Height / 2) + Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds)),
                         SpeedOfAnimation = 0.1f

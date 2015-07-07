@@ -12,7 +12,6 @@ namespace Game1.GameObjects
 {
    public class BigBang: RectGameObject
    {
-
        #region Объявление переменных
         public float SpeedOfAnimation { get; set; }//скорость взрыва
 
@@ -31,14 +30,12 @@ namespace Game1.GameObjects
        #endregion
 
         //Конструктор Взрыва
-        public BigBang(SpriteInfo spriteInfoBigBang)
+        public BigBang(Vector2 Position, SpriteInfo spriteInfoBigBang ) : base(Position, spriteInfoBigBang, 1.0f)
         {
+
             this.spriteInfoBigBang = spriteInfoBigBang;
 
             origin = new Vector2(spriteInfoBigBang.FrameWidth / 2f, spriteInfoBigBang.FrameHeight / 2f);
-
-            Height = spriteInfoBigBang.FrameHeight;
-            Width = spriteInfoBigBang.FrameWidth;
 
             double frameCount = spriteInfoBigBang.FrameCount;//кол-во Frame
             double timeToFrame = spriteInfoBigBang.TimeToFrame.TotalMilliseconds;//время на один Frame

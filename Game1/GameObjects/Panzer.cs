@@ -33,16 +33,13 @@ namespace Game1.GameObjects
         #endregion
 
         //Конструктор Танка
-        public Panzer(SpriteInfo spriteInfoPanzer, SpriteInfo spriteInfoShot, SpriteInfo spriteInfoBigBang, 
-            Func<MovedObject,bool> HasCollisions)
+        public Panzer(Vector2 Position, SpriteInfo spriteInfoPanzer, float Speed, SpriteInfo spriteInfoShot, SpriteInfo spriteInfoBigBang, 
+            Func<MovedObject,bool> HasCollisions) : base(Position, spriteInfoPanzer, 0.2f, Speed)
         {
             this.HasCollisions = HasCollisions;
             this.spriteInfoPanzer = spriteInfoPanzer;
             this.spriteInfoShot = spriteInfoShot;
             this.spriteInfoBigBang = spriteInfoBigBang;
-
-            Height = spriteInfoPanzer.FrameHeight / 5;
-            Width = spriteInfoPanzer.FrameWidth / 5;
 
             origin = new Vector2(spriteInfoPanzer.FrameWidth / 2f, spriteInfoPanzer.FrameHeight / 2f);
         }
@@ -129,10 +126,8 @@ namespace Game1.GameObjects
 
             if (keyboardState.IsKeyDown(Keys.Space) && counterOfShot == 0)
             {
-                Shot shot = new Shot(spriteInfoShot, spriteInfoBigBang)
+                Shot shot = new Shot(Position, spriteInfoShot, 0.5f, spriteInfoBigBang)
                 {
-                    Position = new Vector2(this.Position.X, this.Position.Y),
-                    Speed = 0.5f,
                     Angle = this.Angle,                    
                 };                
                 bulletObjects.Add(shot);

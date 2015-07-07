@@ -16,29 +16,13 @@ namespace Game1.GameObjects
         // 2 - бетон
         // 3 - лес
         // 4 - вода
-        public SpriteInfo Image;
 
-        public ScenicObject() // Беспараметричный конструктор
-        {
-            Position = new Vector2();
-            Width = 0;
-            Height = 0;
-            Type = 1; // По умолчанию этот блок стены из кирпича
-        }
-
-        public ScenicObject(Vector2 Position, int Width, int Height, int Type, SpriteInfo Image) // Конструктор
+        public ScenicObject(Vector2 Position, int Type, SpriteInfo Image, float Scale)
+            : base(Position, Image, Scale)
         {
             this.Position = Position;
-            this.Width = Width;
-            this.Height = Height;
             this.Type = Type;
-            this.Image = Image;
         }       
-
-        public override void Draw(SpriteBatch spriteBatchs)
-        {
-            spriteBatchs.Draw(Image.Texture, Position, Color.White);
-        }
     }
 }
 

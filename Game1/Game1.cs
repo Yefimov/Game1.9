@@ -121,12 +121,8 @@ namespace Game1
             panzerObjects = new HashSet<Panzer>();
             bulletObjects = new HashSet<Shot>();
 
-            Panzer panzer = new Panzer(panzerSprite, shotSprite, bigBangSprite, HasCollisions)
-            {
-                Position = new Vector2(400, 300),
-                Speed = 0.1f,
-            };
-
+            Panzer panzer = new Panzer(new Vector2(400, 300), panzerSprite, 0.1f,
+                shotSprite, bigBangSprite, HasCollisions);
             
             panzerObjects.Add(panzer);
             bulletObjects = panzer.bulletObjects;
