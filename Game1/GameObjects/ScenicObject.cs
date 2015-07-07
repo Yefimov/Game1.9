@@ -9,39 +9,35 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Game1.GameObjects
 {
-    public class ScenicObject
+    public class ScenicObject : RectGameObject
     {
-        public Vector2 Pos; // TODO: Нужен ли нам Pos?
-        public int x { get; set; }
-        public int y { get; set; }
-        public int width { get; set; } // Height не нужен, т.к. все объекты квадратные
-        public int type { get; set; } // Тип этого объекта
+        public int Type { get; set; } // Тип этого объекта
         // 1 - кирпич
         // 2 - бетон
         // 3 - лес
         // 4 - вода
-        public SpriteInfo image;
+        public SpriteInfo Image;
 
         public ScenicObject() // Беспараметричный конструктор
         {
-            x = 0;
-            y = 0;
-            width = 0;
-            type = 1; // По умолчанию этот блок стены из кирпича
+            Position = new Vector2();
+            Width = 0;
+            Height = 0;
+            Type = 1; // По умолчанию этот блок стены из кирпича
         }
 
-        public ScenicObject(int x, int y, int width, int type, SpriteInfo image) // Конструктор
+        public ScenicObject(Vector2 Position, int Width, int Height, int Type, SpriteInfo Image) // Конструктор
         {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.type = type;
-            this.image = image;
+            this.Position = Position;
+            this.Width = Width;
+            this.Height = Height;
+            this.Type = Type;
+            this.Image = Image;
         }       
 
-        public void Draws(SpriteBatch spriteBatchs)
+        public override void Draw(SpriteBatch spriteBatchs)
         {
-            spriteBatchs.Draw(image.Texture, new Vector2(x,y), Color.White);
+            spriteBatchs.Draw(Image.Texture, Position, Color.White);
         }
     }
 }

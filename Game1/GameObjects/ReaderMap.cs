@@ -45,15 +45,15 @@ namespace Game1.GameObjects
                 {
                     if (MasMapsToDraw[i, j] == "1") // Описание каждого типа объекта (от 1 до 4) дано в классе ScenicObject
                     {
-                        scenicObjects.Add(new ScenicObject(i * cell, j * cell, 100, 1, image));
+                        scenicObjects.Add(new ScenicObject(new Vector2(i * cell, j * cell), 16, 16, 1, image));
                     }
                     if (MasMapsToDraw[i, j] == "2")
                     {
-                        scenicObjects.Add(new ScenicObject(i * cell, j * cell, 100, 2, image2));
+                        scenicObjects.Add(new ScenicObject(new Vector2(i * cell, j * cell), 16, 16, 2, image));
                     }
                     if (MasMapsToDraw[i, j] == "3")
                     {
-                        scenicObjects.Add(new ScenicObject(i * cell, j * cell, 100, 3, image3));
+                        scenicObjects.Add(new ScenicObject(new Vector2(i * cell, j * cell), 16, 16, 3, image));
                     }
                     // TODO: Добавить текстуру воды
                     //if (MasMapsToDraw[i,j] == "4")

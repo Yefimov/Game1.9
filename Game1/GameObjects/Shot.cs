@@ -9,21 +9,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Game1.GameObjects
 {
-    public class Shot : RectGameObject
+    public class Shot : MovedObject
     {
-        #region Объявление переменных
-
-
-        public override Vector2 Position { get; set; }//позиция пули
-        public override float Speed { get; set; }//скорость пули
-
+        #region Объявление переменных        
         public float Angle;//угол поворота пули
 
         private Vector2 origin;//центр пули
-        public override int Height { get; set; }//высота Rect пули
-        public override int Width { get; set; }//ширина Rect пули
-        public bool ShotHasCollisions { get; set; }//Есть Коллизия пули и объекта
 
+        public bool ShotHasCollisions { get; set; }//Есть Коллизия пули и объекта
 
         private SpriteInfo spriteInfoShot;//текстура Пули
         private SpriteInfo spriteInfoBigBang;//текстура взрыва
@@ -65,7 +58,7 @@ namespace Game1.GameObjects
                     BigBang bigbang = new BigBang(spriteInfoBigBang)
                     {
                         Position = new Vector2((Position.X - Height / 2) + (-Speed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds, Position.Y),
-                        Speed = 0.1f
+                        SpeedOfAnimation = 0.1f
                     };
                     BigBangObjects = bigbang;
 
@@ -87,7 +80,7 @@ namespace Game1.GameObjects
                     BigBang bigbang = new BigBang(spriteInfoBigBang)
                     {
                         Position = new Vector2(Position.X, Position.Y),
-                        Speed = 0.1f
+                        SpeedOfAnimation = 0.1f
                     };
                     BigBangObjects = bigbang;
 
@@ -108,7 +101,7 @@ namespace Game1.GameObjects
                     BigBang bigbang = new BigBang(spriteInfoBigBang)
                     {
                         Position = new Vector2((Position.X + Height / 2) + Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds, Position.Y),
-                        Speed = 0.1f
+                        SpeedOfAnimation = 0.1f
                     };
                     BigBangObjects = bigbang;
                 }
@@ -129,7 +122,7 @@ namespace Game1.GameObjects
                     BigBang bigbang = new BigBang(spriteInfoBigBang)
                     {
                         Position = new Vector2(Position.X, ((Position.Y + Height / 2) + Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds)),
-                        Speed = 0.1f
+                        SpeedOfAnimation = 0.1f
                     };
                     BigBangObjects = bigbang;
 

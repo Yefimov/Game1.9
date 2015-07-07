@@ -14,12 +14,7 @@ namespace Game1.GameObjects
    {
 
        #region Объявление переменных
-       public override Vector2 Position { get; set; }//Позиция Взрыва
-
-        public override int Height { get; set; }//высота
-        public override int Width { get; set; }//ширина
-
-        public override float Speed { get; set; }//скорость взрыва
+        public float SpeedOfAnimation { get; set; }//скорость взрыва
 
         private SpriteInfo spriteInfoBigBang;//тексутра взрыва
         private Vector2 origin;//координаты центра взрыва

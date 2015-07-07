@@ -45,7 +45,7 @@ namespace Game1
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
         }
 
         /// <summary>
@@ -121,12 +121,13 @@ namespace Game1
             panzerObjects = new HashSet<Panzer>();
             bulletObjects = new HashSet<Shot>();
 
-            Panzer panzer = new Panzer(panzerSprite, shotSprite, bigBangSprite)
+            Panzer panzer = new Panzer(panzerSprite, shotSprite, bigBangSprite, HasCollisions)
             {
-                Position = new Vector2(330, 300),
+                Position = new Vector2(400, 300),
                 Speed = 0.1f,
             };
 
+            
             panzerObjects.Add(panzer);
             bulletObjects = panzer.bulletObjects;
             // Используйте this.Content, чтобы загрузить здесь контент вашей игры
@@ -211,14 +212,14 @@ namespace Game1
                 bulletObject.Draw(spriteBatch);
             }
 
-            foreach (var gameObject in panzerObjects)
+            foreach (var panzerObject in panzerObjects)
             {
-                gameObject.Draw(spriteBatch);
+                panzerObject.Draw(spriteBatch);
             }
-            //foreach (var scenicObject in scenicObjects)
-            //{
-            //    scenicObject.Draws(spriteBatch);
-            //}
+            foreach (var scenicObject in scenicObjects)
+            {
+                scenicObject.Draw(spriteBatch);
+            }
 
             foreach (var bigbandObject in bigBangObjects)
             {
@@ -229,5 +230,26 @@ namespace Game1
 
             base.Draw(gameTime);
         }
+
+        public bool HasCollisions(MovedObject obj)
+        {
+            foreach (var scenicObject in scenicObjects)
+            {
+                if (scenicObject.Intersect(obj))
+                {
+                    return true;
+                }
+            }
+
+            foreach (var panzerObject in panzerObjects)
+            {
+                if (panzerObject.Intersect(obj) && panzerObject != obj)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+       
     }
 }

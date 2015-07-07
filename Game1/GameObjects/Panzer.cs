@@ -10,15 +10,10 @@ using Microsoft.Xna.Framework.Input;
 namespace Game1.GameObjects
 {
     // TODO: Разбитие кирпичей   
-    public class Panzer : RectGameObject
+    public class Panzer : MovedObject
     {
-        #region Объявление переменных
-        public override float Speed { get; set; }//скорость танка      
-        public override Vector2 Position { get; set; }//позиция танка
-
+        #region Объявление переменных           
         public float Angle = (float)MathHelper.TwoPi;//угол поворота Танка
-        public override int Height { get; set; }//высота Rect танка
-        public override int Width { get; set; }//ширина Rect танка
 
         private Vector2 origin;//координаты центра танка
 
@@ -33,19 +28,21 @@ namespace Game1.GameObjects
 
         private TimeSpan elapsedTime;
      
-
+        Func<MovedObject, bool> HasCollisions;
 
         #endregion
 
         //Конструктор Танка
-        public Panzer(SpriteInfo spriteInfoPanzer, SpriteInfo spriteInfoShot, SpriteInfo spriteInfoBigBang)
+        public Panzer(SpriteInfo spriteInfoPanzer, SpriteInfo spriteInfoShot, SpriteInfo spriteInfoBigBang, 
+            Func<MovedObject,bool> HasCollisions)
         {
+            this.HasCollisions = HasCollisions;
             this.spriteInfoPanzer = spriteInfoPanzer;
             this.spriteInfoShot = spriteInfoShot;
             this.spriteInfoBigBang = spriteInfoBigBang;
 
-            Height = spriteInfoPanzer.FrameHeight;
-            Width = spriteInfoPanzer.FrameWidth;
+            Height = spriteInfoPanzer.FrameHeight / 5;
+            Width = spriteInfoPanzer.FrameWidth / 5;
 
             origin = new Vector2(spriteInfoPanzer.FrameWidth / 2f, spriteInfoPanzer.FrameHeight / 2f);
         }
@@ -54,7 +51,7 @@ namespace Game1.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             var sourceRect = new Rectangle(0, 0, spriteInfoPanzer.FrameWidth, spriteInfoPanzer.FrameHeight);//Rect Танка
-            spriteBatch.Draw(spriteInfoPanzer.Texture, Position, sourceRect, Color.White, Angle, origin, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(spriteInfoPanzer.Texture, Position, sourceRect, Color.White, Angle, origin, 0.2f, SpriteEffects.None, 0f);
         }
 
         //Логика для Танка
@@ -76,13 +73,18 @@ namespace Game1.GameObjects
 
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-                if (((Position.X - Height / 2) + (-Speed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds) < 0)
-                {
+                //if (((Position.X - Height / 2) + (-Speed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds) < 0)
+                //{
 
-                }
-                else
+                //}
+                
                 {
                     Position += new Vector2(-Speed, 0) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    if (HasCollisions(this))
+                    {
+                        Position -= new Vector2(-Speed, 0) * (float)gameTime.ElapsedGameTime.TotalMilliseconds; 
+                    }
+
                     Angle = (float)MathHelper.PiOver2;
                 }
             }
