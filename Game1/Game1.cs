@@ -26,6 +26,7 @@ namespace Game1
         SpriteBatch spriteBatch;
         
         private HashSet<ScenicObject> scenicObjects;
+        private HashSet<ScenicObject> scenicForDeleted = new HashSet<ScenicObject>();
         
         private HashSet<Panzer> panzerObjects;
         
@@ -110,12 +111,13 @@ namespace Game1
             var forest = new SpriteInfo { Texture = Content.Load<Texture2D>("forest") };
             var water = new SpriteInfo { Texture = Content.Load<Texture2D>("Water") };
             var black = new SpriteInfo { Texture = Content.Load<Texture2D>("Black") };
+            var eagle = new SpriteInfo { Texture = Content.Load<Texture2D>("eagle32x32") };
 
             scenicObjects = new HashSet<ScenicObject>();
 
             string[,] MasMapsToDraw = null;
 
-            SpriteInfo[] images = { wallbrick, wallconcrete, forest, water, black };
+            SpriteInfo[] images = { wallbrick, wallconcrete, forest, water, black, eagle };
 
             ReaderMap.getMap(ReaderMap.Reader(MasMapsToDraw), scenicObjects, images);
 
@@ -125,11 +127,11 @@ namespace Game1
             panzerObjects = new HashSet<Panzer>();
             bulletObjects = new HashSet<Shot>();
 
-            Panzer panzer = new Panzer(new Vector2(400, 300), panzerSprite, 0.1f,
+            PlayerPanzer playerPanzer = new PlayerPanzer(new Vector2(400, 300), panzerSprite, 0.1f,
                 shotSprite, bigBangSprite, HasCollisions);
-            
-            panzerObjects.Add(panzer);
-            bulletObjects = panzer.bulletObjects;
+
+            panzerObjects.Add(playerPanzer);
+            bulletObjects = playerPanzer.bulletObjects;
             // Используйте this.Content, чтобы загрузить здесь контент вашей игры
         }
 
@@ -193,6 +195,13 @@ namespace Game1
             }
 
             bigBangObjects.RemoveWhere(element => element.timerForBigBangStop);
+
+
+            foreach (var scenic in scenicForDeleted)
+            {
+                scenicObjects.Remove(scenic);
+            }
+
             base.Update(gameTime);
         }
 
@@ -203,7 +212,7 @@ namespace Game1
       
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Gray);
+            GraphicsDevice.Clear(Color.Green);
 
             #region SpriteBatch Begin-End
             spriteBatch.Begin();
@@ -231,23 +240,30 @@ namespace Game1
             base.Draw(gameTime);
         }
 
+        
         public bool HasCollisions(MovedObject obj)
-        {
+        {           
             foreach (var scenicObject in scenicObjects)
             {
-                if (scenicObject.Intersect(obj))
+                if (scenicObject.Intersect(obj) && scenicObject.Type != 3)
                 {
+                    if (scenicObject.Type == 1 && obj is Shot)
+                    {
+                        scenicForDeleted.Add(scenicObject);
+                    }
                     return true;
                 }
             }
 
-            foreach (var panzerObject in panzerObjects)
-            {
-                if (panzerObject.Intersect(obj) && panzerObject != obj)
-                {
-                    return true;
-                }
-            }
+            //foreach (var panzerObject in panzerObjects)
+            //{
+            //    if (panzerObject.Intersect(obj) && panzerObject != obj)
+            //    {
+            //        return true;
+            //    }
+            //}
+
+
             return false;
         }
        
