@@ -68,59 +68,35 @@ namespace Game1.GameObjects
 
             #region Реакции на клавиши
 
+            Vector2 direction = new Vector2();           
+
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-                //if (((Position.X - Height / 2) + (-Speed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds) < 0)
-                //{
-
-                //}
-                
-                {
-                    Position += new Vector2(-Speed, 0) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    if (HasCollisions(this))
-                    {
-                        Position -= new Vector2(-Speed, 0) * (float)gameTime.ElapsedGameTime.TotalMilliseconds; 
-                    }
-
-                    Angle = (float)MathHelper.PiOver2;
-                }
+                Angle = (float)MathHelper.PiOver2;
+                direction = new Vector2(-Speed, 0);
+            }
+            if (keyboardState.IsKeyDown(Keys.Right))
+            {
+                Angle = -(float)MathHelper.PiOver2;
+                direction = new Vector2(Speed, 0);
+            }
+            if (keyboardState.IsKeyDown(Keys.Up))
+            {
+                Angle = (float)MathHelper.Pi;
+                direction = new Vector2(0, -Speed);
+            }
+            if (keyboardState.IsKeyDown(Keys.Down))
+            {
+                Angle = (float)MathHelper.TwoPi;
+                direction = new Vector2(0, Speed);
             }
 
-            else if (keyboardState.IsKeyDown(Keys.Up))
+            if (direction.Length() > 0f)
             {
-                if (((Position.Y - Height / 2) + (-Speed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds) < 0)
+                Position += direction * (float) gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (HasCollisions(this))
                 {
-
-                }
-                else
-                {
-                    Position += new Vector2(0, -Speed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    Angle = (float)MathHelper.Pi;
-                }
-            }
-
-            else if (keyboardState.IsKeyDown(Keys.Right))
-            {
-                if ((Position.X + Height / 2) + Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds >= 800)
-                {
-
-                }
-                else
-                {
-                    Position += new Vector2(Speed, 0) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    Angle = -(float)MathHelper.PiOver2;
-                }
-            }
-            else if (keyboardState.IsKeyDown(Keys.Down))
-            {
-                if (((Position.Y + Height / 2) + Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds) >= 480)
-                {
-
-                }
-                else
-                {
-                    Position += new Vector2(0, Speed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    Angle = (float)MathHelper.TwoPi;
+                    Position -= direction * (float) gameTime.ElapsedGameTime.TotalMilliseconds;
                 }
             }
 

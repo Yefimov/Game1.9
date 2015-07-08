@@ -108,12 +108,16 @@ namespace Game1
             var wallbrick = new SpriteInfo { Texture = Content.Load<Texture2D>("wall_brick") };
             var wallconcrete = new SpriteInfo { Texture = Content.Load<Texture2D>("wall_concrete") };
             var forest = new SpriteInfo { Texture = Content.Load<Texture2D>("forest") };
+            var water = new SpriteInfo { Texture = Content.Load<Texture2D>("Water") };
+            var black = new SpriteInfo { Texture = Content.Load<Texture2D>("Black") };
 
             scenicObjects = new HashSet<ScenicObject>();
 
             string[,] MasMapsToDraw = null;
 
-            ReaderMap.getMap(ReaderMap.Reader(MasMapsToDraw), scenicObjects, wallbrick, wallconcrete, forest);
+            SpriteInfo[] images = { wallbrick, wallconcrete, forest, water, black };
+
+            ReaderMap.getMap(ReaderMap.Reader(MasMapsToDraw), scenicObjects, images);
 
             #endregion
             //==========================================================

@@ -15,7 +15,7 @@ namespace Game1.GameObjects
         {
             using (StreamReader sr = new StreamReader("input.txt"))
             {
-                int size = 26; // Карту можно описать в 26x26 клеток
+                int size = 28; // Карту можно описать в 26x26 клеток
                 string line;
                 string[] mapLine;
                 MasMapsToDraw = new string[size, size];
@@ -36,7 +36,7 @@ namespace Game1.GameObjects
             return MasMapsToDraw;
         }
 
-        public static HashSet<ScenicObject> getMap(string[,] MasMapsToDraw, HashSet<ScenicObject> scenicObjects, SpriteInfo image, SpriteInfo image2, SpriteInfo image3)
+        public static HashSet<ScenicObject> getMap(string[,] MasMapsToDraw, HashSet<ScenicObject> scenicObjects, SpriteInfo[] images)
         {
             int cell = 16; // Ширина блока
             for (int i = 0; i < MasMapsToDraw.GetLength(0); i++)
@@ -46,7 +46,7 @@ namespace Game1.GameObjects
                     int type = Int32.Parse(MasMapsToDraw[i, j]);
                     if (type > 0)
                     {
-                        scenicObjects.Add(new ScenicObject(new Vector2(i * cell, j * cell), type, image, 1f));
+                        scenicObjects.Add(new ScenicObject(new Vector2(i * cell, j * cell), type, images[type - 1], 1f));
                     }
                 }
             }

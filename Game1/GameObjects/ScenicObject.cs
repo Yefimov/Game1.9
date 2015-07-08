@@ -16,6 +16,7 @@ namespace Game1.GameObjects
         // 2 - бетон
         // 3 - лес
         // 4 - вода
+        // 5 - границы карты
 
         public ScenicObject(Vector2 Position, int Type, SpriteInfo Image, float Scale)
             : base(Position, Image, Scale)
